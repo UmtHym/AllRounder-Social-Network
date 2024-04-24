@@ -76,6 +76,21 @@ npm start
 4. Like and comment on posts from other users.
 5. Follow  users to see their posts in your feed or Unfollow them up to you.
 
+## Future Todoes
+
+- [ ] **UI Renovation using React**: Considering redesigning the frontend using React.js to improve performance, modularity, and user experience.
+  
+- [ ] **Integrating OAuth 2.0**: Implementation of OAuth 2.0 authentication to allow users to sign in with their existing accounts from popular social media platforms like Google, Facebook, or Twitter.
+
+- [ ] **Real-time Updates**: Planning on adding real-time updates for notifications, likes, and comments using technologies like WebSockets or server-sent events.
+
+- [ ] **Explore Page**: An explore page to discover new users, trending posts, or recommended content based on user interests and interactions is a good idea.
+
+- [ ] **Mobile Application**: Developing a mobile application for iOS and Android platforms.
+
+- [ ] **Accessibility Improvements**: Ensure the application meets accessibility standards and guidelines to make it usable for all users, including those with disabilities.
+
+
 ## Contributing
 
 Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes.
