@@ -1,6 +1,6 @@
 # AllRounder Social Network
 
-![AllRounder Social Network Logo](/path/to/your/logo.png)
+![AllRounder Social Network Logo](public/imgs/AllRounder.png)
 
 ## Table of Contents
 
