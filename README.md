@@ -1,6 +1,6 @@
 # AllRounder Social Network
 
-![AllRounder Social Network Logo](public/imgs/AllRounder.png)
+![AllRounder Social Network Logo](public/imgs/AllRounder-smaller.png)
 
 ## Table of Contents
 
