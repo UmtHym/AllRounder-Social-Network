@@ -47,6 +47,20 @@
     <div class="col-6 mt-5">
       <a class="btn btn-primary" href="/profile">Return to Profile</a>
       <a class="btn btn-primary" href="/feed">Return to Feed</a>
+      <% if (!post.user || !user.following || !user.following.includes(post.user._id)) { %>
+        <form action="/post/follow/<%= post.user._id %>" method="POST" class="col-3">
+            <button class="btn btn-primary fa fa-plus" type="submit">Follow</button>
+        </form>
+    <% } else { %>
+    <% } %>
+      <% if (post.user && user.following && user.following.includes(post.user._id)) { %>
+        <form action="/post/unfollow/<%= post.user._id %>?_method=DELETE" method="POST" class="col-3">
+            <button class="btn btn-danger fa fa-minus" type="submit">Unfollow</button>
+        </form>
+    <% } else { %>
+    <% } %>
+    
+      
     </div>
   </div>
 </div>

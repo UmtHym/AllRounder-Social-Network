@@ -13,4 +13,8 @@ router.put("/likePost/:id", postsController.likePost);
 
 router.delete("/deletePost/:id", postsController.deletePost);
 
+router.post("/follow/:userId", postsController.followUser);
+router.delete("/unfollow/:userId", postsController.unFollowUser);
+
+
 module.exports = router;

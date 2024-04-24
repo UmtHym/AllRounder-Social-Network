@@ -22,6 +22,9 @@ module.exports = {
   getPost: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).send('Post not found');
+    }
       const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "desc" }).lean();
       res.render("post.ejs", { post: post, user: req.user, comments: comments });
     } catch (err) {
@@ -73,6 +76,38 @@ module.exports = {
       res.redirect("/profile");
     } catch (err) {
       res.redirect("/profile");
+    }
+  },
+  followUser: async (req, res) => {
+    try {
+        if (!req.user.following.includes(req.params.userId)) {
+            req.user.following.push(req.params.userId);
+            
+            await req.user.save();
+            
+            res.status(200).send("User followed successfully");
+        } else {
+            res.status(400).send("User is already being followed");
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+  },
+  unFollowUser: async (req, res) => {
+    try {
+          if (req.user.following.includes(req.params.userId)) {
+          req.user.following.pull(req.params.userId);
+          
+            await req.user.save();
+          
+            res.status(200).send("User unfollowed successfully");
+        } else {
+            res.status(400).send("User us not being followed");
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
     }
   },
 };
