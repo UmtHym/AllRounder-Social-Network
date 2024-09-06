@@ -57,7 +57,7 @@ npm install
 4. Set up environment variables:
 - Create a `.env` file in the root directory.
 - Define environment variables like `PORT`, 
-* `DB_STRING`, , 
+* `DB_STRING`,
 * `CLOUDINARY_CLOUD_NAME`, 
 * `CLOUDINARY_API_KEY`,
 * `CLOUDINARY_API_SECRET`.
