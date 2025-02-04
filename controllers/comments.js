@@ -1,47 +1,63 @@
-
 const Comment = require("../models/Comment");
 
 module.exports = {
-
   createComment: async (req, res) => {
     try {
       await Comment.create({
         comment: req.body.comment,
         likes: 0,
         post: req.params.id,
+        user: req.user.id,
       });
+
       console.log("Comment has been added!");
-      res.redirect("/post/"+req.params.id);
+      res.redirect("/post/" + req.params.id);
     } catch (err) {
       console.log(err);
+      res.redirect("/post/" + req.params.id);
     }
   },
-  // likePost: async (req, res) => {
-  //   try {
-  //     await Post.findOneAndUpdate(
-  //       { _id: req.params.id },
-  //       {
-  //         $inc: { likes: 1 },
-  //       }
-  //     );
-  //     console.log("Likes +1");
-  //     res.redirect(`/post/${req.params.id}`);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // },
-  // deletePost: async (req, res) => {
-  //   try {
-  //     // Find post by id & check the id that if the post exist
-  //     let post = await Post.findById({ _id: req.params.id });
-  //     // Delete image from cloudinary
-  //     await cloudinary.uploader.destroy(post.cloudinaryId);
-  //     // Delete post from db
-  //     await Post.remove({ _id: req.params.id });
-  //     console.log("Deleted Post");
-  //     res.redirect("/profile");
-  //   } catch (err) {
-  //     res.redirect("/profile");
-  //   }
-  // },
+
+  deleteComment: async (req, res) => {
+    try {
+      const comment = await Comment.findById(req.params.id);
+
+      // Check if comment exists
+      if (!comment) {
+        return res.redirect("/post/" + comment.post);
+      }
+
+      // Check if user owns the comment
+      if (comment.user.toString() !== req.user.id) {
+        return res.redirect("/post/" + comment.post);
+      }
+
+      await Comment.deleteOne({ _id: req.params.id });
+      console.log("Comment deleted");
+
+      res.redirect("/post/" + comment.post);
+    } catch (err) {
+      console.log(err);
+      res.redirect("/");
+    }
+  },
+
+  likeComment: async (req, res) => {
+    try {
+      await Comment.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $inc: { likes: 1 },
+        }
+      );
+
+      const comment = await Comment.findById(req.params.id);
+      console.log("Comment liked!");
+
+      res.redirect("/post/" + comment.post);
+    } catch (err) {
+      console.log(err);
+      res.redirect("/");
+    }
+  },
 };
