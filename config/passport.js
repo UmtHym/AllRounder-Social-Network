@@ -20,15 +20,16 @@ module.exports = function (passport) {
             });
           }
 
-          user.comparePassword(password, (err, isMatch) => {
-            if (err) {
-              return done(err);
-            }
+          try {
+            const isMatch = await user.comparePassword(password);
             if (isMatch) {
               return done(null, user);
+            } else {
+              return done(null, false, { msg: "Invalid email or password." });
             }
-            return done(null, false, { msg: "Invalid email or password." });
-          });
+          } catch (err) {
+            return done(err);
+          }
         } catch (err) {
           return done(err);
         }

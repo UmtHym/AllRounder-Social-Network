@@ -27,22 +27,28 @@ exports.postLogin = (req, res, next) => {
     gmail_remove_dots: false,
   });
 
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      req.flash("errors", info);
-      return res.redirect("/login");
-    }
-    req.logIn(user, (err) => {
+  // Using promise-based passport authenticate
+  return new Promise((resolve, reject) => {
+    passport.authenticate("local", (err, user, info) => {
       if (err) {
-        return next(err);
+        return reject(err);
       }
-      req.flash("success", { msg: "Success! You are logged in." });
-      res.redirect(req.session.returnTo || "/profile");
-    });
-  })(req, res, next);
+      if (!user) {
+        req.flash("errors", info);
+        return res.redirect("/login");
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return reject(err);
+        }
+        req.flash("success", { msg: "Success! You are logged in." });
+        res.redirect(req.session.returnTo || "/profile");
+      });
+    })(req, res, next);
+  }).catch((err) => {
+    console.log(err);
+    res.redirect("/login");
+  });
 };
 
 exports.logout = (req, res) => {

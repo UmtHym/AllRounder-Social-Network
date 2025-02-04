@@ -25,14 +25,13 @@ UserSchema.pre("save", async function save(next) {
 });
 
 // Helper method for validating user's password.
-UserSchema.methods.comparePassword = async function comparePassword(
-  candidatePassword
-) {
-  try {
-    return await bcrypt.compare(candidatePassword, this.password);
-  } catch (err) {
-    throw err;
-  }
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+      if (err) return reject(err);
+      resolve(isMatch);
+    });
+  });
 };
 
 module.exports = mongoose.model("User", UserSchema);
