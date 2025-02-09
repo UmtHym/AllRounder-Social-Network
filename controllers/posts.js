@@ -136,7 +136,7 @@ module.exports = {
     }
   },
 
-  unFollowUser: async (req, res) => {
+  unfollowUser: async (req, res) => {
     try {
       if (req.user.following.includes(req.params.userId)) {
         req.user.following.pull(req.params.userId);
